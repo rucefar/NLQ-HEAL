@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>外食上班族精力漏洞與代謝自測</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #F0F4EF; --surface: #FFFFFF; --ink: #12302A; --on-ink: #FFFFFF; --muted: #55706A;
+  --line: #D3DFD8; --tint: #E2EEE6; --ring: #2F8F6B; --sun: #F2B233;
+  --green: #1E9D64; --green-ink: #0E6B41; --green-tint: #DBF0E4;
+  --yellow: #E0A100; --yellow-ink: #855700; --yellow-tint: #FBEFC9;
+  --red: #D6432F; --red-ink: #A62D1D; --red-tint: #FADDD6;
+  --line-green: #04A346;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0E1A17; --surface: #15251F; --ink: #E7F1EC; --on-ink: #0E1A17; --muted: #9BB3AB;
+    --line: #274038; --tint: #1C332B; --ring: #5CC49B;
+    --green: #3CC58A; --green-ink: #7BE0B0; --green-tint: #163A2B;
+    --yellow: #F0B93A; --yellow-ink: #F5CE72; --yellow-tint: #3A2F12;
+    --red: #F0705C; --red-ink: #F59A8B; --red-tint: #3E1E1A;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0E1A17; --surface: #15251F; --ink: #E7F1EC; --on-ink: #0E1A17; --muted: #9BB3AB;
+  --line: #274038; --tint: #1C332B; --ring: #5CC49B;
+  --green: #3CC58A; --green-ink: #7BE0B0; --green-tint: #163A2B;
+  --yellow: #F0B93A; --yellow-ink: #F5CE72; --yellow-tint: #3A2F12;
+  --red: #F0705C; --red-ink: #F59A8B; --red-tint: #3E1E1A;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; -webkit-text-size-adjust: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); }
+body { margin: 0; min-height: 100%; background: var(--paper); color: var(--ink);
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6; -webkit-font-smoothing: antialiased; }
+[hidden] { display: none !important; }
+h1, h2, h3, p { margin: 0; }
+button { font-family: inherit; }
+:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+[tabindex="-1"]:focus { outline: none; }
+.wrap { max-width: 520px; margin: 0 auto; padding: 20px 20px 48px; }
+
+/* 頂部 */
+.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.mark { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+.mark svg { display: block; }
+.step { font-size: 14px; font-weight: 500; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* 按鈕 */
+.btn-primary { display: block; width: 100%; background: var(--ink); color: var(--on-ink); border: 0; border-radius: 12px;
+  padding: 16px 18px; font-size: 16px; font-weight: 700; line-height: 1.2; cursor: pointer; text-align: center;
+  text-decoration: none; transition: opacity .15s, transform .15s; }
+.btn-primary:hover:not(:disabled) { opacity: .88; }
+.btn-primary:active:not(:disabled) { transform: translateY(1px); }
+.btn-primary:disabled { opacity: .3; cursor: not-allowed; }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line); border-radius: 12px;
+  padding: 16px 18px; font-size: 15px; font-weight: 500; line-height: 1.2; cursor: pointer; white-space: nowrap;
+  transition: border-color .15s; }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn-text { padding: 10px 14px; background: transparent; border: 0; color: var(--muted); font-size: 14px;
+  cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.btn-text:hover { color: var(--ink); }
+.center { text-align: center; }
+
+/* 首頁 */
+.badge { display: inline-flex; align-items: center; gap: 8px; background: var(--tint); padding: 6px 12px;
+  border-radius: 999px; font-size: 13px; font-weight: 700; }
+.badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--sun); }
+.hero-title { margin: 16px 0 12px; font-size: clamp(30px, 8.6vw, 38px); line-height: 1.25; font-weight: 900;
+  letter-spacing: -.01em; text-wrap: balance; }
+.lead { color: var(--muted); font-size: 15px; line-height: 1.75; max-width: 34em; }
+.byline { margin-top: 10px; color: var(--muted); font-size: 13px; font-weight: 500; }
+.get-line { margin-top: 12px; color: var(--muted); font-size: 13px; text-align: center; line-height: 1.6; }
+.fine { margin-top: 8px; color: var(--muted); font-size: 13px; text-align: center; }
+
+/* 電量曲線 */
+.curve { margin: 26px 0 22px; padding: 18px 14px 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
+#intro .curve { --st: var(--yellow); --st-ink: var(--yellow-ink); --st-tint: var(--yellow-tint); }
+.curve-cap { font-size: 15px; font-weight: 700; margin: 0 6px 6px; text-wrap: balance; }
+.curve svg { display: block; width: 100%; height: auto; overflow: visible; }
+.curve svg text { font-family: inherit; font-size: 11px; fill: var(--muted); }
+.curve svg text.hot { fill: var(--st-ink); font-weight: 700; }
+.curve .axis { stroke: var(--line); stroke-width: 1.5; }
+.curve .area { fill: var(--st); fill-opacity: .16; opacity: 0; animation: fade .6s ease-out 1s forwards; }
+.curve .line { fill: none; stroke: var(--ink); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.3s cubic-bezier(.3,.6,.2,1) .15s forwards; }
+.curve .drop { stroke: var(--st); stroke-width: 1.5; stroke-dasharray: 3 4; opacity: 0; animation: fade .4s ease-out 1.1s forwards; }
+.curve .halo { fill: var(--st); fill-opacity: .25; opacity: 0; animation: fade .4s ease-out 1.1s forwards; }
+.curve .pt { fill: var(--st); stroke: var(--surface); stroke-width: 2.5; opacity: 0; animation: fade .4s ease-out 1.1s forwards; }
+.curve-note { margin: 4px 6px 6px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.curve svg text.landmark { fill: var(--ink); font-weight: 700; font-size: 12px; }
+.curve svg text.axis-lbl { fill: var(--muted); font-size: 10.5px; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+#result[data-level="yellow"] .curve, #result[data-level="red"] .curve { --st: var(--red); --st-ink: var(--red-ink); }
+.curve svg text.landmark.lowlbl { fill: var(--st-ink); }
+.curve .pulse { fill: var(--st); opacity: 0; transform-box: fill-box; transform-origin: center; animation: pulse 1.6s ease-out 1.2s infinite; }
+@keyframes pulse { 0% { opacity: .55; transform: scale(.8); } 100% { opacity: 0; transform: scale(2.6); } }
+@keyframes fade { to { opacity: 1; } }
+
+/* 答題中逐步成形的曲線 */
+.qcurve { margin: 0 0 22px; padding: 14px 14px 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+.qcurve-cap { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 700; color: var(--muted); margin-bottom: 4px; }
+.qcurve-cap b { color: var(--ink); font-weight: 700; }
+.qcurve-mask { overflow: hidden; transition: clip-path .4s ease; }
+.qcurve-mask svg { display: block; width: 100%; height: auto; }
+.qcurve .area { fill: var(--sun); fill-opacity: .18; }
+.qcurve .line { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; transition: d .35s ease; }
+.qcurve .axis { stroke: var(--line); stroke-width: 1.5; }
+.qcurve .cursor { fill: var(--sun); stroke: var(--surface); stroke-width: 2; transition: cx .35s ease, cy .35s ease; }
+
+/* 題目 */
+.segs { display: grid; gap: 5px; margin-bottom: 30px; }
+.seg { height: 6px; border-radius: 99px; background: var(--line); transition: background-color .25s; }
+.seg.on { background: var(--ink); }
+.qtag { display: inline-block; margin-bottom: 12px; padding: 4px 10px; background: var(--tint); border-radius: 999px; font-size: 13px; font-weight: 700; }
+.q { font-size: 22px; line-height: 1.55; font-weight: 700; margin-bottom: 22px; text-wrap: pretty; }
+.enter { animation: enter .22s ease-out; }
+@keyframes enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.opt { position: relative; display: flex; align-items: flex-start; gap: 14px; padding: 16px; margin-bottom: 10px;
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; font-size: 16px; line-height: 1.6;
+  cursor: pointer; transition: border-color .15s, background-color .15s; }
+.opt:hover { border-color: var(--ink); }
+.opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.dot { flex: none; width: 22px; height: 22px; margin-top: 2px; border: 2px solid var(--muted); border-radius: 50%;
+  display: grid; place-items: center; transition: background-color .15s, border-color .15s; }
+.dot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--on-ink); transform: scale(0); transition: transform .15s; }
+.opt.is-selected { border-color: var(--ink); background: var(--tint); }
+.opt.is-selected .dot { background: var(--ink); border-color: var(--ink); }
+.opt.is-selected .dot::after { transform: scale(1); }
+.opt input:focus-visible + .dot { outline: 3px solid var(--ring); outline-offset: 3px; }
+.nav { display: flex; gap: 10px; margin-top: 24px; }
+.nav .btn-primary { flex: 1; width: auto; }
+
+/* 分析中 */
+.load-battery { display: block; width: 132px; height: auto; margin: 6px 0 22px; }
+.load-battery .cell { fill: var(--sun); opacity: .2; transition: opacity .3s; }
+.load-battery .cell.on { opacity: 1; }
+.load-title { font-size: 22px; font-weight: 700; line-height: 1.4; }
+.chk { list-style: none; margin: 18px 0 0; padding: 0; }
+.chk li { display: flex; gap: 12px; align-items: flex-start; padding: 9px 0; color: var(--muted); font-size: 15px; line-height: 1.6; opacity: .4; transition: opacity .3s; }
+.chk li.active, .chk li.done { opacity: 1; }
+.chk li.active { color: var(--ink); }
+.chk .ic { position: relative; flex: none; width: 20px; height: 20px; margin-top: 2px; border: 2px solid var(--line); border-radius: 50%; }
+.chk li.active .ic { border-color: var(--ink); border-top-color: transparent; animation: spin .8s linear infinite; }
+.chk li.done .ic { background: var(--ink); border-color: var(--ink); }
+.chk li.done .ic::after { content: ""; position: absolute; left: 5px; top: 1px; width: 5px; height: 9px; border: solid var(--on-ink); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.bar { height: 6px; margin-top: 22px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--ink); transition: width 2.1s ease-in-out; }
+
+/* 結果 */
+[data-level="green"] { --st: var(--green); --st-ink: var(--green-ink); --st-tint: var(--green-tint); }
+[data-level="yellow"] { --st: var(--yellow); --st-ink: var(--yellow-ink); --st-tint: var(--yellow-tint); }
+[data-level="red"] { --st: var(--red); --st-ink: var(--red-ink); --st-tint: var(--red-tint); }
+.pill { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 6px 12px; border-radius: 999px;
+  background: var(--st-tint); color: var(--st-ink); font-size: 14px; font-weight: 700; }
+.pill::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--st); }
+.status-title { margin-top: 10px; font-size: 30px; line-height: 1.25; font-weight: 900; letter-spacing: -.01em; }
+.gauge { display: flex; align-items: baseline; gap: 14px; margin: 14px 0 12px; }
+.gauge-label { font-size: 15px; font-weight: 700; color: var(--muted); }
+.pct { font-size: 84px; line-height: .95; font-weight: 900; letter-spacing: -.04em; color: var(--st-ink); font-variant-numeric: tabular-nums; }
+.pct small { font-size: 32px; letter-spacing: 0; margin: 0 2px; }
+.status-desc { color: var(--muted); font-size: 15px; line-height: 1.75; }
+.rx-title { margin: 34px 0 4px; font-size: 19px; line-height: 1.45; font-weight: 700; }
+.rx-list { list-style: none; margin: 18px 0 0; padding: 0; }
+.rx { position: relative; margin-left: 6px; padding: 0 0 26px 24px; border-left: 2px solid var(--line); }
+.rx:last-child { padding-bottom: 4px; border-left-color: transparent; }
+.rx::before { content: ""; position: absolute; left: -7px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: var(--st); box-shadow: 0 0 0 4px var(--paper); }
+.rx .when { font-size: 13px; font-weight: 700; color: var(--st-ink); }
+.rx h3 { margin: 2px 0 6px; font-size: 17px; line-height: 1.45; font-weight: 700; }
+.rx p { color: var(--muted); font-size: 14.5px; line-height: 1.8; }
+
+/* 行動步驟 */
+.acts { margin-top: 34px; padding-top: 6px; border-top: 1px solid var(--line); }
+.act { display: grid; grid-template-columns: 34px 1fr; gap: 14px; margin-top: 28px; }
+.num { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--on-ink); font-size: 16px; font-weight: 900; }
+.act h2 { margin-top: 3px; font-size: 18px; line-height: 1.45; font-weight: 700; }
+.act .sub { margin-top: 4px; color: var(--muted); font-size: 14.5px; line-height: 1.75; }
+.cardbox { margin: 14px 0 12px; padding: 10px; background: var(--tint); border-radius: 16px; }
+.cardbox img { display: block; width: 100%; height: auto; border-radius: 10px; -webkit-touch-callout: default; }
+.skeleton { display: grid; place-items: center; min-height: 260px; color: var(--muted); font-size: 14px; }
+.hint { margin-top: 10px; font-size: 13px; color: var(--muted); min-height: 1.6em; }
+.invite { margin-top: 14px; padding: 18px; background: var(--green-tint); border-radius: 16px; color: var(--green-ink); font-size: 14.5px; line-height: 1.8; }
+.invite strong { font-weight: 700; }
+.btn-line { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 14px;
+  padding: 16px 14px; background: var(--line-green); color: #fff; text-decoration: none; border-radius: 12px;
+  font-size: 17px; font-weight: 700; line-height: 1.3; text-align: center; transition: opacity .15s; }
+.btn-line:hover { opacity: .9; }
+.btn-line svg { flex: none; }
+/* Portaly 品牌出口卡片樣式 */
+.portaly-box { margin-top: 14px; padding: 18px; background: var(--surface); border: 1.5px solid var(--line); border-radius: 16px; color: var(--ink); font-size: 14.5px; line-height: 1.8; }
+.portaly-box strong { font-weight: 700; }
+.disclaimer { margin-top: 28px; font-size: 12px; line-height: 1.7; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) {
+  .curve .line { animation: none; stroke-dashoffset: 0; }
+  .curve .area, .curve .drop, .curve .halo, .curve .pt { animation: none; opacity: 1; }
+  .curve .pulse { animation: none; opacity: 0; }
+  .enter, .chk li.active .ic { animation: none; }
+  * { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <span class="mark">
+    <svg width="30" height="16" viewBox="0 0 30 16" aria-hidden="true">
+      <rect x="1" y="1" width="25" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <rect x="27.5" y="5" width="2.5" height="6" rx="1" fill="currentColor"/>
+      <rect x="4.5" y="4.5" width="5" height="7" rx="1.5" fill="var(--sun)"/>
+      <rect x="11" y="4.5" width="5" height="7" rx="1.5" fill="var(--sun)"/>
+      <rect x="17.5" y="4.5" width="5" height="7" rx="1.5" fill="var(--sun)" fill-opacity=".35"/>
+    </svg>
+    生活與精力提案
+  </span>
+  <span class="step" id="step-label"></span>
+</header>
+
+<main>
+<!-- 1. 首頁 -->
+<section id="intro">
+  <span class="badge">雙北外食族生活作息檢測</span>
+  <h1 class="hero-title" tabindex="-1" data-focus>你的一天，會在哪裡斷電？</h1>
+  <p class="lead">7 題、90 秒，找出你的耗電漏洞，換一份客製的 3 天晨間微習慣方案。</p>
+  <p class="byline">ArnoldYea 健康管理師 設計</p>
+
+  <figure class="curve" style="margin-left:0;margin-right:0">
+    <p class="curve-cap">很多外食上班族的一天，長這樣</p>
+    <div id="intro-curve"></div>
+    <p class="curve-note">縱軸是精神狀態，橫軸是時間；這只是常見的例子，你的曲線要答完題才會知道</p>
+  </figure>
+
+  <button type="button" class="btn-primary" id="start">開始檢測</button>
+  <p class="get-line">答完你會拿到：耗電類型・3 天晨間建議・一張可存的圖卡</p>
+  <div class="center"><button type="button" class="btn-text" id="restart" hidden>清除紀錄，重新開始</button></div>
+  <p class="fine" id="fine">共 7 題，約 90 秒，不需登入</p>
+</section>
+
+<!-- 2. 題目 -->
+<section id="quiz" hidden></section>
+
+<!-- 3. 分析過渡畫面 -->
+<section id="loading" hidden aria-live="polite">
+  <svg class="load-battery" viewBox="0 0 132 68" aria-hidden="true">
+    <rect x="3" y="3" width="112" height="62" rx="16" fill="none" stroke="var(--ink)" stroke-width="5"/>
+    <rect x="119" y="22" width="10" height="24" rx="4" fill="var(--ink)"/>
+    <rect class="cell" x="14" y="14" width="27" height="40" rx="7"/>
+    <rect class="cell" x="45" y="14" width="27" height="40" rx="7"/>
+    <rect class="cell" x="76" y="14" width="27" height="40" rx="7"/>
+  </svg>
+  <h1 class="load-title" tabindex="-1" data-focus>正在整理您的作答...</h1>
+  <ul class="chk" id="chk">
+    <li><span class="ic"></span><span>正在整理你的 7 題作答...</span></li>
+    <li><span class="ic"></span><span>正在找出一天中最容易斷電的時段...</span></li>
+    <li><span class="ic"></span><span>正在生成專屬 3 天晨間微習慣方案...</span></li>
+  </ul>
+  <div class="bar"><i id="bar"></i></div>
+</section>
+
+<!-- 4. 結果 -->
+<section id="result" hidden>
+  <span class="badge">檢測報告已就緒</span>
+  <p style="margin-top:12px;font-size:14px;color:var(--muted)">您的個人化精力漏洞報告</p>
+  <span class="pill" id="res-pill"></span>
+  <h1 class="status-title" id="res-title" tabindex="-1" data-focus></h1>
+  <div class="gauge"><span class="gauge-label">耗電等級</span><span class="pct" id="res-pct"></span></div>
+  <p class="status-desc" id="res-desc"></p>
+
+  <figure class="curve" style="margin-left:0;margin-right:0">
+    <p class="curve-cap">依你的作答換算的一天精神狀態</p>
+    <div id="res-curve"></div>
+    <p class="curve-note">依你的作答換算，非儀器量測數值</p>
+  </figure>
+
+  <h2 class="rx-title">針對你的勾選項目，定制的 3 天晨間建議</h2>
+  <ul class="rx-list" id="rx-list"></ul>
+
+  <div class="acts">
+    <div class="act">
+      <span class="num" aria-hidden="true">1</span>
+      <div>
+        <h2>儲存你的專屬建議圖卡</h2>
+        <p class="sub">在手機上<strong>長按圖片</strong>即可存到相簿，也可以直接按下方按鈕，儲存或分享給 LINE。</p>
+        <div class="cardbox">
+          <div class="skeleton" id="card-skel">正在產生圖卡...</div>
+          <img id="card-img" alt="" hidden>
+        </div>
+        <button type="button" class="btn-primary" id="save-card" disabled>儲存或分享圖片卡</button>
+        <p class="hint" id="card-hint" aria-live="polite"></p>
+      </div>
+    </div>
+
+    <div class="act">
+      <span class="num" aria-hidden="true">2</span>
+      <div>
+        <h2>準備好開始改善下午斷電了嗎？</h2>
+
+        <!-- 出口 A：知識與陪伴軌（LINE 讀書會社群） -->
+        <div class="invite">
+          歡迎加入我們的<strong>【👑興欣讀書會👑】LINE 社群</strong>。我們<strong>每月舉辦一場線下讀書會</strong>，也<strong>不定時舉辦線上讀書會</strong>，一起共讀《吃的營養科學觀》與節氣養生，互相陪伴成長！
+          <a href="https://line.me/ti/g2/1-6peDzljr-H4H9MHw-A9735OrMO2xPvnNXw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" class="btn-line" id="line-btn" target="_blank" rel="noopener">
+            <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.6 2 11c0 3.6 3 6.7 7.2 7.6L8.5 22l4.6-3.3C18 18.3 22 15 22 11c0-4.4-4.5-8-10-8z"/></svg>
+            <span>加入「興欣讀書會」LINE 社群</span>
+          </a>
+        </div>
+
+        <!-- 出口 B：高效解決方案軌（Portaly 品牌頁面） -->
+        <div class="portaly-box">
+          想知道我自己日常怎麼<strong>喝好水、吃得簡單、把家裡空氣顧好</strong>嗎？我把常用的生活小物整理成一份清單，有興趣再慢慢逛，不用急著決定。
+          <a href="https://portaly.cc/ArnoldYea" class="btn-primary" style="margin-top: 14px;" target="_blank" rel="noopener">
+            看看 ArnoldYea 的生活小物清單
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="center" style="margin-top:20px"><button type="button" class="btn-text" id="retake">重新測驗</button></div>
+  <p class="disclaimer">本檢測為生活習慣的自我檢視工具，結果僅供參考，不能取代醫療診斷。若不適症狀持續或加劇，請諮詢醫療專業人員。</p>
+</section>
+</main>
+</div>
+
+<script>
+(function () {
+  // ▼ 讀書會 LINE 社群專屬連結
+  var LINE_URL = 'https://line.me/ti/g2/1-6peDzljr-H4H9MHw-A9735OrMO2xPvnNXw?utm_source=invitation&utm_medium=link_copy&utm_campaign=default';
+
+  var QUESTIONS = [
+    { tag: '早晨起床', t: '早晨起床時，你的大腦與身體開機狀態通常是？',
+      o: ['鬧鐘響自然醒，身體輕快，精神清爽', '需賴床 10 分鐘，有點沉重但還能活動', '像沒睡過一樣全身沉重，必須立刻喝特大冰咖啡才能開機'] },
+    { tag: '早餐', t: '你平時的早餐結構通常是哪種類型？',
+      o: ['有足夠蛋白質（如：無糖豆漿＋蛋、雞胸肉、優質蛋白飲）', '精緻碳水為主（如：鐵板麵、飯糰、麵包、含糖奶茶）', '趕時間經常不吃早餐，只靠一杯咖啡撐到中午'] },
+    { tag: '下午', t: '下午 2:00～4:00 在辦公室的工作專注力狀態？',
+      o: ['專注力穩定，能順暢處理複雜思考工作', '稍微疲憊，但起身走動伸展一下可緩解', '出現斷崖式腦霧，極度渴望訂手搖飲、吃甜食或喝第二杯咖啡'] },
+    { tag: '午餐後', t: '平時午餐吃完排骨便當、麵食或超商後，腹部的感覺？',
+      o: ['飽足舒適，沒有腹脹或沉重負擔感', '偶爾脹脹的，但過一小時會自然緩解', '明顯腹部悶脹，吃半小時內強烈睏意襲來'] },
+    { tag: '整天喝水', t: '你每天「純水」（不含茶、咖啡、湯、手搖飲）的攝取量？',
+      o: ['充足！每天喝足體重 × 30cc（約 1800cc 以上）', '想到才喝，大約只有 1000cc 左右', '很少喝純水，主要靠無糖茶、咖啡解渴'] },
+    { tag: '整天久坐', t: '每日工作久坐與日常身體僵硬程度？',
+      o: ['每工作 1 小時會起身活動，循環良好', '連續久坐 4～6 小時，下班覺得腰痠背痛', '經常久坐超過 8 小時，肩頸僵硬，下肢容易浮腫'] },
+    { tag: '晚間放鬆', t: '晚上下班後到上床睡覺前的放鬆狀態？',
+      o: ['容易放鬆，躺平 15 分鐘內自然入睡且一覺到天亮', '偶爾滑手機拖延，但大致能順利入睡', '身體很累但腦袋轉個不停，淺眠多夢，半夜容易醒'] }
+  ];
+  var N = QUESTIONS.length;
+
+  var RX = {
+    water: { when: '起床第一件事', title: '晨起 500cc 溫水重啟儀式',
+      desc: '起床第一件事不是滑手機，花 5 分鐘慢慢喝完 500cc 溫水，補充一整晚流失的水分，也有助於喚醒腸胃。',
+      short: '起床花 5 分鐘慢慢喝完溫水，補充夜間流失的水分。' },
+    caffeine: { when: '起床後', title: '晨起延遲咖啡因 90 分鐘',
+      desc: '起床後先別急著喝咖啡，試著延後 90 分鐘再喝，讓身體先自然清醒，可能有助於減少下午的昏沉感。',
+      short: '延後 90 分鐘再喝咖啡，讓身體先自然清醒。' },
+    protein: { when: '早餐', title: '晨間補充 20g 優質蛋白質',
+      desc: '早餐盡量不要只吃精緻澱粉或空腹。試著補足約 20g 的蛋白質，有助於穩定飽足感，減少下午想吃甜食、喝手搖飲的衝動。',
+      short: '早餐補足約 20g 蛋白質，穩定飽足感。' },
+    lunch: { when: '午餐', title: '外食便當「肉菜飯」進食順序',
+      desc: '吃便當時先吃肉與蔬菜，最後再吃澱粉。有助於讓飯後血糖起伏較平緩，減輕飯後的悶脹與睏意。',
+      short: '先吃肉菜再吃澱粉，減輕飯後悶脹與睏意。' },
+    sleep: { when: '睡前 60 分鐘', title: '降溫斷光',
+      desc: '睡前 1 小時將臥室光源調為暖色弱光，放下手機，讓身體進入準備睡覺的狀態。',
+      short: '調暗燈光、放下手機，讓身體準備入睡。' },
+    keep: { when: '每天早上', title: '維持建議：早晨 500cc 溫水與優質蛋白質',
+      desc: '你的基礎非常優秀，維持充足純水與優質蛋白質，即可常保專注。',
+      short: '維持充足純水與優質蛋白質，即可常保專注。' },
+    move: { when: '工作日白天', title: '每小時起身 2 分鐘',
+      desc: '每坐 50～60 分鐘就起身走動，伸展肩頸與小腿 2 分鐘，改善下肢循環，減少下午的僵硬與浮腫。',
+      short: '每小時起身 2 分鐘，活動肩頸與小腿。' },
+    walk: { when: '午餐後', title: '飯後散步 10 分鐘',
+      desc: '吃完便當後別直接坐回位子，慢走 10 分鐘，幫助消化並緩和飯後血糖起伏。',
+      short: '飯後慢走 10 分鐘，緩和睏意與悶脹。' },
+    general: { when: '每天早上', title: '先從一個小習慣開始',
+      desc: '你的作息有幾處小漏洞，建議從「起床喝 500cc 溫水」開始，連續 3 天，再慢慢加入其他調整。',
+      short: '起床先喝 500cc 溫水，連續 3 天。' }
+  };
+
+  var LEVELS = {
+    green: { pill: '綠燈', title: '精力穩定型', num: '低',
+      desc: '你的作息維持得相當健康，目前的隱性耗電漏洞極少，請繼續保持！', color: '#3CC58A' },
+    yellow: { pill: '黃燈', title: '電池老化型', num: '中',
+      desc: '你的作息有些耗電的地方，例如外食碳水偏多或水分不足，可能是下午容易沒精神的原因之一。', color: '#F0B93A' },
+    red: { pill: '紅燈', title: '核心透支型', num: '高',
+      desc: '你的作息耗電明顯偏高，咖啡因只能暫時提神，大腦可能缺少穩定的能量來源。', color: '#F0705C' }
+  };
+
+  var HOURS = [7, 9, 11, 12.5, 14, 15.5, 17, 19, 21, 23];
+  var TICKS = [[7, '起床'], [12, '午餐'], [14, '14:00'], [18, '下班'], [22, '睡前']];
+  var MARK = 4;
+  var FONT = '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
+  var KEY = 'energy-quiz-progress-v2';
+
+  var EXAMPLE_CURVE = [28, 46, 58, 44, 20, 30, 34, 30, 24, 20];
+  var BASE_CURVE = [70, 88, 90, 86, 82, 78, 72, 64, 54, 40];
+  var HOUR_AT = { 7: 0, 9: 1, 11: 2, 12.5: 3, 14: 4, 15.5: 5, 17: 6, 19: 7, 21: 8, 23: 9 };
+  var DELTA = {
+    0: { 1: { 7: -10, 9: -4 }, 2: { 7: -30, 9: -10 } },
+    1: { 1: { 9: -8, 11: -10 }, 2: { 9: -18, 11: -22 } },
+    2: { 1: { 14: -10, 15.5: -8 }, 2: { 14: -35, 15.5: -28 } },
+    3: { 1: { 12.5: -6, 14: -6 }, 2: { 12.5: -16, 14: -18 } },
+    5: { 1: { 17: -6, 19: -8 }, 2: { 17: -16, 19: -22 } },
+    6: { 1: { 19: -4, 21: -6, 23: -10 }, 2: { 19: -8, 21: -22, 23: -30 } }
+  };
+  var MULT = { 4: { 1: 0.95, 2: 0.88 } };
+
+  function computeCurve(ans) {
+    var e = BASE_CURVE.slice();
+    Object.keys(DELTA).forEach(function (qi) {
+      var v = ans[+qi];
+      if (v === 1 || v === 2) {
+        var d = DELTA[qi][v];
+        Object.keys(d).forEach(function (h) { e[HOUR_AT[h]] += d[h]; });
+      }
+    });
+    Object.keys(MULT).forEach(function (qi) {
+      var v = ans[+qi];
+      if (v === 1 || v === 2) {
+        var m = MULT[qi][v];
+        e = e.map(function (n) { return n * m; });
+      }
+    });
+    return e.map(function (n) { return Math.max(8, Math.min(95, Math.round(n))); });
+  }
+
+  var $ = function (id) { return document.getElementById(id); };
+  var answers = blank();
+  var idx = 0, timer = null, resumeIdx = 0, resumeCount = 0;
+  var cardBlob = null, cardToken = 0;
+
+  function blank() { var a = []; for (var i = 0; i < N; i++) a.push(null); return a; }
+  function answeredCount() { return answers.filter(function (v) { return v !== null; }).length; }
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (e) {} }
+  function clearSave() { try { localStorage.removeItem(KEY); } catch (e) {} }
+  function loadSaved() {
+    try {
+      var s = JSON.parse(localStorage.getItem(KEY));
+      if (Array.isArray(s) && s.length === N)
+        return s.map(function (v) { return (v === 0 || v === 1 || v === 2) ? v : null; });
+    } catch (e) {}
+    return null;
+  }
+
+  function segs(pts) {
+    var out = [];
+    for (var i = 0; i < pts.length - 1; i++) {
+      var p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      out.push([
+        [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6],
+        [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6],
+        p2
+      ]);
+    }
+    return out;
+  }
+
+  function pathD(pts) {
+    var f = function (n) { return n.toFixed(1); };
+    var d = 'M' + f(pts[0][0]) + ',' + f(pts[0][1]);
+    segs(pts).forEach(function (s) {
+      d += ' C' + f(s[0][0]) + ',' + f(s[0][1]) + ' ' + f(s[1][0]) + ',' + f(s[1][1]) + ' ' + f(s[2][0]) + ',' + f(s[2][1]);
+    });
+    return d;
+  }
+
+  // 只在 7:00～19:00 找低點（睡前自然偏低，不列入）
+  function lowIndex(p) { var k = 0; for (var i = 1; i <= 7; i++) if (p[i] < p[k]) k = i; return k; }
+  function hh(h) { var H = Math.floor(h), M = h % 1 ? '30' : '00'; return (H < 10 ? '0' : '') + H + ':' + M; }
+
+  function curveSVG(profile, warn) {
+    var X0 = 24, X1 = 336, BASE = 132;
+    var x = function (h) { return X0 + (h - 7) / 16 * (X1 - X0); };
+    var y = function (e) { return 128 - e * 1.05; };
+    var pts = profile.map(function (e, i) { return [x(HOURS[i]), y(e)]; });
+    var f = function (n) { return n.toFixed(1); };
+    var d = pathD(pts);
+    var last = pts[pts.length - 1];
+    var area = d + ' L' + f(last[0]) + ',' + BASE + ' L' + f(pts[0][0]) + ',' + BASE + ' Z';
+    var low = lowIndex(profile);
+    var m = pts[low];
+    var lowHour = HOURS[low];
+    var ticks = TICKS.map(function (t) {
+      return '<text x="' + f(x(t[0])) + '" y="152" text-anchor="middle"' + (t[0] === lowHour ? ' class="hot"' : '') + '>' + t[1] + '</text>';
+    }).join('');
+    var anchor = m[0] > 250 ? 'end' : (m[0] < 100 ? 'start' : 'middle');
+    var lowLabel = '<text class="landmark lowlbl" x="' + f(m[0]) + '" y="' + f(m[1] - 20) + '" text-anchor="' + anchor + '">' + (warn ? '最容易斷電：' : '一天中的低點：') + hh(lowHour) + '</text>';
+    var pulse = warn ? '<circle class="pulse" cx="' + f(m[0]) + '" cy="' + f(m[1]) + '" r="9"/>' : '';
+    return '<svg viewBox="0 24 360 136" role="img" aria-label="一天的電量起伏示意曲線，標記為一天中精神最低的時段">' +
+      '<line class="axis" x1="' + X0 + '" y1="' + BASE + '" x2="' + X1 + '" y2="' + BASE + '"/>' +
+      '<path class="area" d="' + area + '"/>' +
+      '<line class="drop" x1="' + f(m[0]) + '" y1="' + f(m[1]) + '" x2="' + f(m[0]) + '" y2="' + BASE + '"/>' +
+      '<path class="line" pathLength="1" d="' + d + '"/>' +
+      '<circle class="halo" cx="' + f(m[0]) + '" cy="' + f(m[1]) + '" r="11"/>' +
+      '<circle class="pt" cx="' + f(m[0]) + '" cy="' + f(m[1]) + '" r="6"/>' +
+      pulse + lowLabel + ticks + '</svg>';
+  }
+
+  function introCurveSVG(profile) {
+    var X0 = 24, X1 = 336, BASE = 132;
+    var x = function (h) { return X0 + (h - 7) / 16 * (X1 - X0); };
+    var y = function (e) { return 128 - e * 1.05; };
+    var pts = profile.map(function (e, i) { return [x(HOURS[i]), y(e)]; });
+    var f = function (n) { return n.toFixed(1); };
+    var d = pathD(pts);
+    var last = pts[pts.length - 1];
+    var area = d + ' L' + f(last[0]) + ',' + BASE + ' L' + f(pts[0][0]) + ',' + BASE + ' Z';
+    var m = pts[MARK], p7 = pts[0], p12 = pts[3];
+    var ticks = TICKS.map(function (t) {
+      return '<text x="' + f(x(t[0])) + '" y="152" text-anchor="middle"' + (t[0] === 14 ? ' class="hot"' : '') + '>' + t[1] + '</text>';
+    }).join('');
+    return '<svg viewBox="0 0 360 160" role="img" aria-label="一天精神狀態示意曲線，標出起床沉重、午餐後昏睡與下午腦霧三個常見低點">' +
+      '<text class="axis-lbl" x="' + X0 + '" y="12">精神好</text>' +
+      '<text class="axis-lbl" x="' + X0 + '" y="' + (BASE - 6) + '">想睡</text>' +
+      '<line class="axis" x1="' + X0 + '" y1="' + BASE + '" x2="' + X1 + '" y2="' + BASE + '"/>' +
+      '<path class="area" d="' + area + '"/>' +
+      '<line class="drop" x1="' + f(m[0]) + '" y1="' + f(m[1]) + '" x2="' + f(m[0]) + '" y2="' + BASE + '"/>' +
+      '<path class="line" pathLength="1" d="' + d + '"/>' +
+      '<circle cx="' + f(p7[0]) + '" cy="' + f(p7[1]) + '" r="4.5" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>' +
+      '<text class="landmark" x="' + f(p7[0]) + '" y="' + f(p7[1] - 20) + '" text-anchor="start">起床沉重</text>' +
+      '<circle cx="' + f(p12[0]) + '" cy="' + f(p12[1]) + '" r="4.5" fill="var(--ink)" stroke="var(--surface)" stroke-width="2"/>' +
+      '<text class="landmark" x="' + f(p12[0]) + '" y="' + f(p12[1] - 34) + '" text-anchor="middle">午餐後昏睡</text>' +
+      '<circle class="halo" cx="' + f(m[0]) + '" cy="' + f(m[1]) + '" r="11"/>' +
+      '<circle class="pt" cx="' + f(m[0]) + '" cy="' + f(m[1]) + '" r="6"/>' +
+      '<text class="landmark" x="' + f(m[0]) + '" y="' + f(m[1] - 20) + '" text-anchor="middle">下午腦霧</text>' +
+      ticks + '</svg>';
+  }
+
+  function miniCurveSVG(profile) {
+    var X0 = 6, X1 = 354, BASE = 76, TOP = 6;
+    var x = function (h) { return X0 + (h - 7) / 16 * (X1 - X0); };
+    var y = function (e) { return BASE - (e / 100) * (BASE - TOP); };
+    var pts = profile.map(function (e, i) { return [x(HOURS[i]), y(e)]; });
+    var f = function (n) { return n.toFixed(1); };
+    var d = pathD(pts);
+    var last = pts[pts.length - 1];
+    var area = d + ' L' + f(last[0]) + ',' + BASE + ' L' + f(pts[0][0]) + ',' + BASE + ' Z';
+    return '<svg viewBox="0 0 360 84" preserveAspectRatio="none" role="img" aria-hidden="true">' +
+      '<line class="axis" x1="' + X0 + '" y1="' + BASE + '" x2="' + X1 + '" y2="' + BASE + '"/>' +
+      '<path class="area" d="' + area + '"/>' +
+      '<path class="line" d="' + d + '"/>' +
+      '</svg>';
+  }
+
+  function updateQCurve() {
+    var mask = $('qcurve-mask');
+    if (!mask) return;
+    var count = answeredCount();
+    var pct = Math.round((count / N) * 100);
+    mask.innerHTML = miniCurveSVG(computeCurve(answers));
+    mask.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+    var n = $('qcurve-n');
+    if (n) n.textContent = count + ' / ' + N + ' 題';
+  }
+
+  function show(name) {
+    ['intro', 'quiz', 'loading', 'result'].forEach(function (id) { $(id).hidden = id !== name; });
+    $('step-label').textContent = name === 'quiz' ? (idx + 1) + ' / ' + N : '';
+    window.scrollTo(0, 0);
+    var h = document.querySelector('#' + name + ' [data-focus]');
+    if (h) h.focus({ preventScroll: true });
+  }
+
+  function renderQuestion() {
+    var q = QUESTIONS[idx], last = idx === N - 1;
+    var bars = QUESTIONS.map(function (_, i) { return '<span class="seg' + (i <= idx ? ' on' : '') + '"></span>'; }).join('');
+    var opts = q.o.map(function (text, v) {
+      var sel = answers[idx] === v;
+      return '<label class="opt' + (sel ? ' is-selected' : '') + '">' +
+        '<input type="radio" name="q' + idx + '" value="' + v + '"' + (sel ? ' checked' : '') + '>' +
+        '<span class="dot" aria-hidden="true"></span><span>' + text + '</span></label>';
+    }).join('');
+
+    var el = $('quiz');
+    el.innerHTML =
+      '<div class="segs" aria-hidden="true" style="grid-template-columns:repeat(' + N + ',1fr)">' + bars + '</div>' +
+      '<figure class="qcurve">' +
+        '<figcaption class="qcurve-cap"><span>你的一天正在成形</span><b id="qcurve-n">' + answeredCount() + ' / ' + N + ' 題</b></figcaption>' +
+        '<div class="qcurve-mask" id="qcurve-mask"></div>' +
+      '</figure>' +
+      '<div class="enter">' +
+        '<span class="qtag">' + q.tag + '</span>' +
+        '<h2 class="q" id="q-title" tabindex="-1" data-focus>' + q.t + '</h2>' +
+        '<div role="radiogroup" aria-labelledby="q-title">' + opts + '</div>' +
+        '<div class="nav">' +
+          '<button type="button" class="btn-ghost" id="back">上一題</button>' +
+          '<button type="button" class="btn-primary" id="next"' + (answers[idx] === null ? ' disabled' : '') + '>' + (last ? '生成我的精力修復報告' : '下一題') + '</button>' +
+        '</div>' +
+      '</div>';
+    updateQCurve();
+
+    el.querySelectorAll('.opt').forEach(function (label) {
+      var input = label.querySelector('input');
+      input.addEventListener('change', function () {
+        answers[idx] = parseInt(input.value, 10);
+        save();
+        el.querySelectorAll('.opt').forEach(function (l) {
+          l.classList.toggle('is-selected', l.querySelector('input').checked);
+        });
+        $('next').disabled = false;
+        updateQCurve();
+      });
+      label.addEventListener('click', function (e) {
+        if (e.detail > 0 && idx < N - 1 && !timer) {
+          timer = setTimeout(function () {
+            timer = null;
+            if (answers[idx] !== null) next();
+          }, 320);
+        }
+      });
+    });
+    $('back').addEventListener('click', back);
+    $('next').addEventListener('click', next);
+    show('quiz');
+  }
+
+  function next() {
+    clearTimeout(timer); timer = null;
+    if (answers[idx] === null) return;
+    if (idx < N - 1) { idx++; renderQuestion(); } else { analyze(); }
+  }
+  function back() {
+    clearTimeout(timer); timer = null;
+    if (idx > 0) { idx--; renderQuestion(); } else { show('intro'); }
+  }
+
+  function analyze() {
+    var lis = $('chk').children, cells = document.querySelectorAll('.load-battery .cell');
+    for (var i = 0; i < lis.length; i++) lis[i].className = '';
+    cells.forEach(function (c) { c.classList.remove('on'); });
+    $('bar').style.transition = 'none';
+    $('bar').style.width = '0';
+    show('loading');
+
+    var step = function (n) {
+      for (var i = 0; i < lis.length; i++) lis[i].className = i < n ? 'done' : (i === n ? 'active' : '');
+      cells.forEach(function (c, i) { c.classList.toggle('on', i <= Math.min(n, 2)); });
+    };
+    step(0);
+    setTimeout(function () { $('bar').style.transition = ''; $('bar').style.width = '100%'; }, 50);
+    setTimeout(function () { step(1); }, 700);
+    setTimeout(function () { step(2); }, 1400);
+    setTimeout(function () { step(3); }, 2100);
+    setTimeout(renderResult, 2400);
+  }
+
+  function compute() {
+    var a = answers;
+    var total = a.reduce(function (s, v) { return s + v; }, 0);
+    var key = total <= 4 ? 'green' : total <= 8 ? 'yellow' : 'red';
+    var cand = [];
+    function add(rx, sev) { cand.push({ rx: rx, sev: sev, ord: cand.length }); }
+    if (a[4] >= 1) add(RX.water, a[4]);
+    if (a[0] === 2) add(RX.caffeine, 2);
+    if (a[1] >= 1 || a[2] === 2) add(RX.protein, Math.max(a[1], a[2] === 2 ? 2 : 0));
+    if (a[3] === 2) add(RX.lunch, 2);
+    else if (a[3] === 1) add(RX.walk, 1);
+    if (a[5] >= 1) add(RX.move, a[5]);
+    if (a[6] >= 1) add(RX.sleep, a[6]);
+    // 依嚴重程度排序（選到最差選項的優先），同級維持原順序；圖卡最多 4 張
+    cand.sort(function (p, q) { return q.sev - p.sev || p.ord - q.ord; });
+    var items = cand.slice(0, 4).map(function (x) { return x.rx; });
+    if (!items.length) items.push(key === 'green' ? RX.keep : RX.general);
+    return { key: key, L: LEVELS[key], items: items, curve: computeCurve(a) };
+  }
+
+  function renderResult() {
+    var r = compute();
+    var res = $('result');
+    res.setAttribute('data-level', r.key);
+    $('res-pill').textContent = r.L.pill;
+    $('res-title').textContent = r.L.title;
+    $('res-pct').textContent = r.L.num;
+    $('res-desc').textContent = r.L.desc;
+    $('res-curve').innerHTML = curveSVG(r.curve, r.key !== 'green');
+    $('rx-list').innerHTML = r.items.map(function (x) {
+      return '<li class="rx"><span class="when">' + x.when + '</span><h3>' + x.title + '</h3><p>' + x.desc + '</p></li>';
+    }).join('');
+    $('line-btn').href = LINE_URL;
+    $('card-img').hidden = true;
+    $('card-skel').hidden = false;
+    $('card-skel').textContent = '正在產生圖卡...';
+    $('save-card').disabled = true;
+    $('card-hint').textContent = '';
+    cardBlob = null;
+    show('result');
+    buildCard(r);
+  }
+
+  function rr(c, x, y, w, h, r) {
+    c.beginPath();
+    c.moveTo(x + r, y);
+    c.arcTo(x + w, y, x + w, y + h, r);
+    c.arcTo(x + w, y + h, x, y + h, r);
+    c.arcTo(x, y + h, x, y, r);
+    c.arcTo(x, y, x + w, y, r);
+    c.closePath();
+  }
+  function wrap(c, text, maxW) {
+    var lines = [], line = '', noStart = '，。、；：！？）」』…,.;:!?)';
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charAt(i), t = line + ch;
+      if (c.measureText(t).width > maxW && line && noStart.indexOf(ch) === -1) { lines.push(line); line = ch; }
+      else { line = t; }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  async function buildCard(r) {
+    var token = ++cardToken;
+    var strings = ['外食上班族精力漏洞與代謝檢測生活與精力提案個人化3天晨間微習慣方案耗電等級低中高起床午餐下班睡前14:00針對你的勾選項目定制的3天晨間建議長按保存此圖傳送到興欣讀書會LINE社群開始實驗最容易斷電：一天中的低點：0123456789:本檢測為生活習慣自我檢視工具不能取代醫療診斷', r.L.pill, r.L.title];
+    r.items.forEach(function (x) { strings.push(x.when, x.title, x.short); });
+    var all = strings.join('');
+    try {
+      await Promise.all(['400 17px', '500 16px', '700 20px', '900 40px'].map(function (f) {
+        return document.fonts.load(f + ' "Noto Sans TC"', all);
+      }));
+    } catch (e) {}
+    if (token !== cardToken) return;
+
+    var W = 800, P = 48, IN = W - P * 2, S = 2;
+    var scratch = document.createElement('canvas').getContext('2d');
+    scratch.font = '400 17px ' + FONT;
+    var blocks = r.items.map(function (x) {
+      var lines = wrap(scratch, x.short, IN - 48);
+      return { x: x, lines: lines, h: 96 + (lines.length - 1) * 28 + 26 };
+    });
+
+    var PANEL_Y = 190, PANEL_H = 330;
+    var y = PANEL_Y + PANEL_H + 62;
+    var blocksTop = y + 22;
+    var H = blocksTop + blocks.reduce(function (s, b) { return s + b.h + 14; }, 0) + 20 + 92;
+
+    var cv = document.createElement('canvas');
+    cv.width = W * S; cv.height = H * S;
+    var c = cv.getContext('2d');
+    c.scale(S, S);
+    c.textBaseline = 'alphabetic';
+
+    var BG = '#12302A', PANEL = '#1A3D35', LINE = '#2C5148', TXT = '#E7F1EC', MUTED = '#9BB3AB', SUN = '#F2B233', ST = r.L.color;
+
+    c.fillStyle = BG; c.fillRect(0, 0, W, H);
+    c.fillStyle = SUN; c.fillRect(0, 0, W, 8);
+
+    c.strokeStyle = TXT; c.lineWidth = 3; rr(c, P + 1.5, 49.5, 49, 25, 8); c.stroke();
+    c.fillStyle = TXT; rr(c, P + 54, 57, 5, 10, 2); c.fill();
+    c.fillStyle = SUN;
+    [0, 1, 2].forEach(function (i) {
+      c.globalAlpha = i === 2 ? .35 : 1;
+      rr(c, P + 8 + i * 14, 55, 11, 14, 3); c.fill();
+    });
+    c.globalAlpha = 1;
+    c.fillStyle = TXT; c.font = '700 22px ' + FONT; c.fillText('生活與精力提案', P + 74, 71);
+
+    c.fillStyle = '#FFFFFF'; c.font = '900 38px ' + FONT; c.fillText('個人化 3 天晨間微習慣方案', P, 132);
+    c.fillStyle = MUTED; c.font = '400 18px ' + FONT; c.fillText('外食上班族精力漏洞與代謝檢測', P, 166);
+
+    c.fillStyle = PANEL; rr(c, P, PANEL_Y, IN, PANEL_H, 20); c.fill();
+    c.fillStyle = ST; c.beginPath(); c.arc(P + 34, PANEL_Y + 40, 8, 0, Math.PI * 2); c.fill();
+    c.fillStyle = TXT; c.font = '700 24px ' + FONT; c.fillText(r.L.pill + ' ' + r.L.title, P + 54, PANEL_Y + 49);
+
+    c.fillStyle = MUTED; c.font = '700 18px ' + FONT;
+    var lw = c.measureText('耗電等級').width;
+    c.fillText('耗電等級', P + 28, PANEL_Y + 126);
+    c.fillStyle = ST; c.font = '900 68px ' + FONT;
+    c.fillText(r.L.num, P + 28 + lw + 16, PANEL_Y + 126);
+
+    var cx0 = P + 28, cx1 = P + IN - 28, base = PANEL_Y + 278;
+    var px = function (h) { return cx0 + (h - 7) / 16 * (cx1 - cx0); };
+    var py = function (e) { return base - e * 1.35; };
+    var pts = r.curve.map(function (e, i) { return [px(HOURS[i]), py(e)]; });
+    var sg = segs(pts);
+    c.strokeStyle = LINE; c.lineWidth = 2; c.beginPath(); c.moveTo(cx0, base); c.lineTo(cx1, base); c.stroke();
+
+    c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
+    sg.forEach(function (s) { c.bezierCurveTo(s[0][0], s[0][1], s[1][0], s[1][1], s[2][0], s[2][1]); });
+    var lastP = pts[pts.length - 1];
+    c.lineTo(lastP[0], base); c.lineTo(pts[0][0], base); c.closePath();
+    c.globalAlpha = .2; c.fillStyle = ST; c.fill(); c.globalAlpha = 1;
+
+    c.beginPath(); c.moveTo(pts[0][0], pts[0][1]);
+    sg.forEach(function (s) { c.bezierCurveTo(s[0][0], s[0][1], s[1][0], s[1][1], s[2][0], s[2][1]); });
+    c.strokeStyle = TXT; c.lineWidth = 4; c.lineCap = 'round'; c.lineJoin = 'round'; c.stroke();
+
+    var low = lowIndex(r.curve), m = pts[low], warn = r.key !== 'green';
+    var AL = warn ? '#F0705C' : ST;
+    c.strokeStyle = AL; c.lineWidth = 2; c.setLineDash([4, 6]);
+    c.beginPath(); c.moveTo(m[0], m[1]); c.lineTo(m[0], base); c.stroke();
+    c.setLineDash([]);
+    c.globalAlpha = .3; c.fillStyle = AL; c.beginPath(); c.arc(m[0], m[1], 15, 0, Math.PI * 2); c.fill(); c.globalAlpha = 1;
+    c.fillStyle = AL; c.strokeStyle = PANEL; c.lineWidth = 3;
+    c.beginPath(); c.arc(m[0], m[1], 8, 0, Math.PI * 2); c.fill(); c.stroke();
+
+    c.textAlign = 'center';
+    TICKS.forEach(function (t) {
+      var hot = t[0] === HOURS[low];
+      c.fillStyle = hot ? AL : MUTED;
+      c.font = (hot ? '700 ' : '400 ') + '15px ' + FONT;
+      c.fillText(t[1], px(t[0]), base + 26);
+    });
+    c.textAlign = m[0] > 500 ? 'right' : (m[0] < 200 ? 'left' : 'center');
+    c.fillStyle = AL; c.font = '700 16px ' + FONT;
+    c.fillText((warn ? '最容易斷電：' : '一天中的低點：') + hh(HOURS[low]), m[0], m[1] - 26);
+    c.textAlign = 'left';
+
+    c.fillStyle = '#C9DAD3'; c.font = '700 21px ' + FONT;
+    c.fillText('針對你的勾選項目，定制的 3 天晨間建議', P, y);
+
+    var by = blocksTop;
+    blocks.forEach(function (b) {
+      c.fillStyle = PANEL; rr(c, P, by, IN, b.h, 14); c.fill();
+      c.fillStyle = ST; c.fillRect(P, by + 16, 5, b.h - 32);
+      c.fillStyle = ST; c.font = '700 16px ' + FONT; c.fillText(b.x.when, P + 26, by + 36);
+      c.fillStyle = '#FFFFFF'; c.font = '700 22px ' + FONT; c.fillText(b.x.title, P + 26, by + 68);
+      c.fillStyle = MUTED; c.font = '400 17px ' + FONT;
+      b.lines.forEach(function (ln, i) { c.fillText(ln, P + 26, by + 100 + i * 28); });
+      by += b.h + 14;
+    });
+
+    var fy = by + 22;
+    c.strokeStyle = LINE; c.lineWidth = 1.5; c.beginPath(); c.moveTo(P, fy - 20); c.lineTo(W - P, fy - 20); c.stroke();
+    c.fillStyle = MUTED; c.font = '500 16px ' + FONT;
+    c.fillText('長按保存此圖，傳送到「興欣讀書會」LINE 社群，開始實驗', P, fy + 12);
+    c.fillStyle = '#6F8A82'; c.font = '400 14px ' + FONT;
+    c.fillText('本檢測為生活習慣自我檢視工具，不能取代醫療診斷。', P, fy + 40);
+
+    var img = $('card-img');
+    img.src = cv.toDataURL('image/png');
+    img.alt = '專屬精力漏洞建議圖卡：' + r.L.pill + '，' + r.L.title;
+    img.hidden = false;
+    $('card-skel').hidden = true;
+    $('save-card').disabled = false;
+    cv.toBlob(function (b) { if (token === cardToken) cardBlob = b; }, 'image/png');
+  }
+
+  async function saveCard() {
+    var hint = $('card-hint');
+    if (!cardBlob) { hint.textContent = '圖卡還在產生中，請稍候一下。'; return; }
+    var file = new File([cardBlob], '精力漏洞建議卡.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: '我的精力漏洞建議卡' });
+        return;
+      } catch (e) {
+        if (e && e.name === 'AbortError') return;
+      }
+    }
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(cardBlob);
+    a.download = '精力漏洞建議卡.png';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1500);
+    hint.textContent = '若沒有自動下載，請長按上方圖片，選擇「儲存到相簿」。';
+  }
+
+  function resetAll() {
+    answers = blank(); idx = 0; resumeCount = 0; resumeIdx = 0; cardToken++;
+    clearSave();
+    $('start').textContent = '開始檢測';
+    $('restart').hidden = true;
+    $('intro-curve').innerHTML = introCurveSVG(EXAMPLE_CURVE);
+  }
+
+  var saved = loadSaved();
+  if (saved) {
+    var count = saved.filter(function (v) { return v !== null; }).length;
+    if (count > 0) {
+      answers = saved; resumeCount = count;
+      var firstEmpty = saved.indexOf(null);
+      resumeIdx = firstEmpty === -1 ? N - 1 : firstEmpty;
+      $('start').textContent = count === N ? '查看上次的結果' : '繼續作答（已答 ' + count + ' 題）';
+      $('restart').hidden = false;
+    }
+  }
+  $('intro-curve').innerHTML = introCurveSVG(EXAMPLE_CURVE);
+
+  $('start').addEventListener('click', function () {
+    if (resumeCount === N) { idx = N - 1; analyze(); return; }
+    idx = resumeCount > 0 ? resumeIdx : 0;
+    renderQuestion();
+  });
+  $('restart').addEventListener('click', resetAll);
+  $('retake').addEventListener('click', function () { resetAll(); show('intro'); });
+  $('save-card').addEventListener('click', saveCard);
+})();
+</script>
+</body>
+</html>
